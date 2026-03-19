@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste-to-Energy Engineering Report | Why Projects Fail & How Engineers Can Fix Them</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --accent: #dd6b20;
+            --accent-light: #ed8936;
+            --dark: #1a202c;
+            --gray: #4a5568;
+            --gray-light: #718096;
+            --light: #f7fafc;
+            --white: #ffffff;
+            --success: #38a169;
+            --warning: #d69e2e;
+            --danger: #e53e3e;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--dark);
+            background: var(--white);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 0.75rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 6rem 2rem 4rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero h1 span {
+            color: var(--accent-light);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .hero-focus {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 2.5rem;
+            font-style: italic;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--white);
+            opacity: 0.6;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Executive Summary */
+        .executive-summary {
+            background: var(--light);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .summary-text {
+            font-size: 1.1rem;
+            color: var(--gray);
+            line-height: 1.9;
+        }
+
+        .summary-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .key-points {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .key-points h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        .key-points ul {
+            list-style: none;
+        }
+
+        .key-points li {
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--gray);
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .key-points li:last-child {
+            border-bottom: none;
+        }
+
+        .key-points li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--primary);
+            color: var(--white);
+            padding: 4rem 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        /* Technologies Section */
+        .tech-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .tech-card {
+            background: var(--white);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+            border-color: var(--primary-light);
+        }
+
+        .tech-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-card .tech-type {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .tech-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .tech-specs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .tech-spec {
+            text-align: center;
+        }
+
+        .tech-spec span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--gray-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tech-spec strong {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .suitability {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .suitability-label {
+            font-size: 0.8rem;
+            color: var(--gray-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .suitability-value {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+
+        .suitability-high {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .suitability-moderate {
+            background: #feebc8;
+            color: #744210;
+        }
+
+        .suitability-low {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        /* Failure Causes Section */
+        .failure-causes {
+            background: linear-gradient(180deg, var(--light) 0%, var(--white) 100%);
+        }
+
+        .causes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .cause-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--danger);
+            transition: all 0.3s ease;
+        }
+
+        .cause-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cause-card h4 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .cause-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Solutions Section */
+        .solutions-section {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .solutions-section .section-title,
+        .solutions-section .section-subtitle {
+            color: var(--white);
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .solution-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .solution-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--accent-light);
+        }
+
+        .solution-card ul {
+            list-style: none;
+        }
+
+        .solution-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            opacity: 0.9;
+        }
+
+        .solution-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* Case Studies */
+        .case-studies {
+            background: var(--light);
+        }
+
+        .case-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .case-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .case-header {
+            padding: 1.5rem 2rem;
+            color: var(--white);
+        }
+
+        .case-failed .case-header {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+        }
+
+        .case-success .case-header {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+        }
+
+        .case-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .case-header .case-location {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .case-body {
+            padding: 2rem;
+        }
+
+        .case-body h4 {
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .case-body h4:first-child {
+            margin-top: 0;
+        }
+
+        .case-body p, .case-body li {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .case-body ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .case-body li {
+            padding-left: 1.25rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .case-body li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .case-metric {
+            display: inline-block;
+            background: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .case-metric strong {
+            color: var(--primary);
+        }
+
+        /* Economic Analysis */
+        .economic-section {
+            background: var(--white);
+        }
+
+        .economic-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .economic-card {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .economic-card h3 {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .economic-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .economic-item:last-child {
+            border-bottom: none;
+        }
+
+        .economic-item span {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--gray-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .economic-item strong {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        /* Implementation */
+        .implementation-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+        }
+
+        .implementation-section .section-title,
+        .implementation-section .section-subtitle {
+            color: var(--white);
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .timeline-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 2rem;
+            right: -1rem;
+            width: 2rem;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .timeline-number {
+            width: 4rem;
+            height: 4rem;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+
+        .timeline-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Key Takeaways */
+        .takeaways-section {
+            background: var(--light);
+        }
+
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .takeaway-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .takeaway-card h3 {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .takeaway-card ul {
+            list-style: none;
+        }
+
+        .takeaway-card li {
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .takeaway-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-tagline {
+            opacity: 0.7;
+            margin-bottom: 2rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .summary-grid,
+            .tech-cards,
+            .case-cards,
+            .solutions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .causes-grid,
+            .economic-grid,
+            .takeaways-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline {
+                flex-direction: column;
+            }
+
+            .timeline-item::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .causes-grid,
+            .economic-grid,
+            .takeaways-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">WTE Engineering</a>
+            <ul class="nav-links">
+                <li><a href="#summary">Summary</a></li>
+                <li><a href="#technologies">Technologies</a></li>
+                <li><a href="#failures">Failures</a></li>
+                <li><a href="#solutions">Solutions</a></li>
+                <li><a href="#cases">Cases</a></li>
+                <li><a href="#takeaways">Takeaways</a></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Comprehensive Engineering Analysis • March 2026</div>
+            <h1>Why Most Waste-to-Energy <span>Projects Fail</span></h1>
+            <p class="hero-subtitle">And How Engineers Can Fix It</p>
+            <p class="hero-focus">Focus: Nigeria & Developing Markets</p>
+            <div class="hero-cta">
+                <a href="#summary" class="btn btn-primary">Read the Analysis</a>
+                <a href="#solutions" class="btn btn-secondary">View Solutions</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>2B+</h3>
+                    <p>Tonnes of waste generated annually worldwide</p>
+                </div>
+                <div class="stat-item">
+                    <h3>32M</h3>
+                    <p>Tonnes of waste generated in Nigeria yearly</p>
+                </div>
+                <div class="stat-item">
+                    <h3>500-600</h3>
+                    <p>kWh generated per tonne of waste</p>
+                </div>
+                <div class="stat-item">
+                    <h3>90%</h3>
+                    <p>Mass reduction achieved through WTE</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Executive Summary -->
+    <section id="summary" class="executive-summary">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Overview</span>
+                <h2 class="section-title">Executive Summary</h2>
+                <p class="section-subtitle">Waste-to-Energy represents one of the most promising intersections of environmental sustainability and energy security.</p>
+            </div>
+            <div class="summary-grid">
+                <div class="summary-text">
+                    <p>Despite billions of dollars invested globally, the majority of WTE projects fail to meet their design expectations, with many shutting down within the first five years of operation.</p>
+                    <p>This report provides a comprehensive engineering analysis of why WTE projects fail, with particular focus on developing markets like Nigeria and Africa. Drawing from over 30 years of experience in energy systems and industrial infrastructure, we examine the root causes of failure and provide actionable engineering solutions.</p>
+                    <p>The key insight: successful WTE projects are not built on imported technology alone, but on engineering systems that account for local waste characteristics, operational capabilities, and economic realities.</p>
+                </div>
+                <div class="key-points">
+                    <h3>Key Failure Points</h3>
+                    <ul>
+                        <li>Poor waste characterization leading to incorrect plant design</li>
+                        <li>Technology mismatch - selecting advanced European systems for unprepared waste streams</li>
+                        <li>Inadequate maintenance culture and lack of spare parts supply chains</li>
+                        <li>Financial models based on unrealistic assumptions</li>
+                        <li>Regulatory gaps and inconsistent policy enforcement</li>
+                        <li>Environmental compliance failures</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technologies Section -->
+    <section id="technologies" class="technologies-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Technical Overview</span>
+                <h2 class="section-title">Waste-to-Energy Technologies</h2>
+                <p class="section-subtitle">Each technology has specific requirements, advantages, and limitations that must be matched to local conditions.</p>
+            </div>
+            <div class="tech-cards">
+                <div class="tech-card fade-in">
+                    <h3>Incineration</h3>
+                    <span class="tech-type">Mass Burn</span>
+                    <p>The most widely deployed WTE technology globally, accounting for ~70% of capacity. Combusts waste at 850-1100°C with heat recovery through boilers.</p>
+                    <div class="tech-specs">
+                        <div class="tech-spec">
+                            <span>Efficiency</span>
+                            <strong>20-25%</strong>
+                        </div>
+                        <div class="tech-spec">
+                            <span>Energy Recovery</span>
+                            <strong>400-700 kWh/t</strong>
+                        </div>
+                        <div class="tech-spec">
+                            <span>Mass Reduction</span>
+                            <strong>90%</strong>
+                        </div>
+                        <div class="tech-spec">
+                            <span>CAPEX</span>
+                            <strong>High</strong>
+                        </div>
+                    </div>
+                    <div class="suitability">
+                        <span class="suitability-label">Nigeria Suitability</span>
+                        <span class="suitability-value suitability-moderate">Moderate</span>
+                    </div>
+                </div>
+
+                <div class="tech-card fade-in">
+                    <h3>Gasification</h3>
+                    <span class="tech-type">Thermochemical</span>
+                    <p>Converts carbonaceous materials into syngas at high temperatures (800-1400°C) with controlled oxygen. Higher efficiency than incineration.</p>
+                    <div class="tech-specs">
+                        <div class="tech-spec">
+                            <span>Efficiency</span>
+                            <strong>35-40%</strong>
+                        </div>
+                        <div class="tech-spec">
+                            <span>Output</span>
+                            <strong>Syngas</strong>
+                        </div>
+                        <div class="tech-spec">
+                            <span>Feedstock</span>
+                            <strong>Consistent/RDF</strong>
+                        </div>
+                        <div class="tech-spec">
+                            <span>CAPEX</span>
+                            <strong>Very High</strong>
+                        </div>
+                    </div>
+                    <div class="suitability">
+                        <span class="suitability-label">Nigeria Suitability</span>
+                        <span class="suitability-value suitability-low">Low-Moderate</span>
+                    </div>
+                </div>
+
+                <div class="tech-card fade-in">
+                    <h3>Pyrolysis</h3>
+                    <span class="tech-type">Thermal Decomposition</span>
+                    <p>Thermal decomposition in absence of oxygen, producing char, oil, and gas. Particularly suitable for plastics and rubber waste.</p>
+                    <div class="tech-specs">
+                        <div class="tech-spec">
+                            <span>Efficiency</span>
+                            <strong>25-30%</strong>
+                        </div>
+                        <div class="tech-spec">
+                            <span>Products</span>
+                            <strong>Char, Oil, Gas</strong>
+                        </div>
+                        <div class="tech-spec">
+                            <span>Temperature</span>
+                            <strong>300-800°C</strong>
+                        </div>
+                        <div class="tech-spec">
+                            <span>CAPEX</span>
+                            <strong>Medium</strong>
+                        </div>
+                    </div>
+                    <div class="suitability">
+                        <span class="suitability-label">Nigeria Suitability</span>
+                        <span class="suitability-value suitability-high">High</span>
+                    </div>
+                </div>
+
+                <div class="tech-card fade-in">
+                    <h3>Anaerobic Digestion</h3>
+                    <span class="tech-type">Biochemical</span>
+                    <p>Uses microorganisms to break down biodegradable material, producing biogas (60-70% methane). Ideal for high-moisture organic waste.</p>
+                    <div class="tech-specs">
+                        <div class="tech-spec">
+                            <span>Efficiency</span>
+                            <strong>15-20%</strong>
+                        </div>
+                        <div class="tech-spec">
+                            <span>Biogas</span>
+                            <strong>100-200 m³/t</strong>
+                        </div>
+                        <div class="tech-spec">
+                            <span>Residence</span>
+                            <strong>15-30 days</strong>
+                        </div>
+                        <div class="tech-spec">
+                            <span>CAPEX</span>
+                            <strong>Low</strong>
+                        </div>
+                    </div>
+                    <div class="suitability">
+                        <span class="suitability-label">Nigeria Suitability</span>
+                        <span class="suitability-value suitability-high">Very High</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Failure Causes Section -->
+    <section id="failures" class="failure-causes">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Root Cause Analysis</span>
+                <h2 class="section-title">Why WTE Projects Fail</h2>
+                <p class="section-subtitle">Failures are rarely due to a single factor but rather a combination of technical, operational, and systemic issues.</p>
+            </div>
+            <div class="causes-grid">
+                <div class="cause-card fade-in">
+                    <h4>Poor Waste Segregation</h4>
+                    <p>Projects designed based on assumptions about waste composition rather than actual data, leading to catastrophic mismatches.</p>
+                </div>
+                <div class="cause-card fade-in">
+                    <h4>Incorrect Technology Selection</h4>
+                    <p>Advanced European systems fail when fed Nigerian waste with 50-70% moisture vs. 20-30% in Europe.</p>
+                </div>
+                <div class="cause-card fade-in">
+                    <h4>Design Flaws</h4>
+                    <p>Feed system failures, combustion chamber issues, and heat recovery problems from underestimating local waste chemistry.</p>
+                </div>
+                <div class="cause-card fade-in">
+                    <h4>Low Calorific Value</h4>
+                    <p>Nigerian waste: 8-10 MJ/kg vs. 12-15 MJ/kg in Europe. This 30-40% reduction has cascading effects on performance.</p>
+                </div>
+                <div class="cause-card fade-in">
+                    <h4>Poor Maintenance Culture</h4>
+                    <p>WTE plants require continuous maintenance. The culture in many developing markets differs fundamentally from requirements.</p>
+                </div>
+                <div class="cause-card fade-in">
+                    <h4>Financial Miscalculations</h4>
+                    <p>Unrealistic financial models lead to insufficient capital, inadequate operating budgets, and eventual abandonment.</p>
+                </div>
+                <div class="cause-card fade-in">
+                    <h4>Policy & Regulatory Issues</h4>
+                    <p>Inconsistent policies, unclear permitting, and lack of enforcement create uncertainty that discourages investment.</p>
+                </div>
+                <div class="cause-card fade-in">
+                    <h4>Environmental Challenges</h4>
+                    <p>Failure to meet emission standards leads to regulatory shutdown, public opposition, and reputational damage.</p>
+                </div>
+                <div class="cause-card fade-in">
+                    <h4>Lack of Local Expertise</h4>
+                    <p>Every issue requiring overseas technical support dramatically increases costs and downtime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section id="solutions" class="solutions-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Engineering Solutions</span>
+                <h2 class="section-title">How Engineers Can Fix It</h2>
+                <p class="section-subtitle">Practical, locally-adaptable engineering approaches proven effective in challenging environments.</p>
+            </div>
+            <div class="solutions-grid">
+                <div class="solution-card fade-in">
+                    <h3>Design Improvements</h3>
+                    <ul>
+                        <li>12-month waste characterization before design</li>
+                        <li>Design for 90th percentile worst-case</li>
+                        <li>Modular and scalable plant design</li>
+                        <li>Enhanced pre-processing systems</li>
+                        <li>Consider drying systems if needed</li>
+                    </ul>
+                </div>
+                <div class="solution-card fade-in">
+                    <h3>System Optimization</h3>
+                    <ul>
+                        <li>Advanced combustion control systems</li>
+                        <li>Continuous oxygen monitoring</li>
+                        <li>Automatic grate speed adjustment</li>
+                        <li>Corrosion-resistant boiler materials</li>
+                        <li>Soot blower systems for ash removal</li>
+                    </ul>
+                </div>
+                <div class="solution-card fade-in">
+                    <h3>Maintenance Frameworks</h3>
+                    <ul>
+                        <li>Preventive maintenance schedules</li>
+                        <li>Predictive maintenance implementation</li>
+                        <li>Thermography for hot spot detection</li>
+                        <li>Oil analysis for bearing monitoring</li>
+                        <li>Critical spare parts inventory on-site</li>
+                    </ul>
+                </div>
+                <div class="solution-card fade-in">
+                    <h3>Local Adaptation</h3>
+                    <ul>
+                        <li>Heavy investment in operator training</li>
+                        <li>Operating manuals in local languages</li>
+                        <li>Maximize locally available materials</li>
+                        <li>Climate-appropriate design features</li>
+                        <li>Build local technical capability</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section id="cases" class="case-studies">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Real World Examples</span>
+                <h2 class="section-title">Case-Based Scenarios</h2>
+                <p class="section-subtitle">Two realistic scenarios based on typical project experiences in developing markets.</p>
+            </div>
+            <div class="case-cards">
+                <div class="case-card case-failed fade-in">
+                    <div class="case-header">
+                        <h3>Failed Project</h3>
+                        <span class="case-location">The Lagos WTE Plant</span>
+                    </div>
+                    <div class="case-body">
+                        <h4>Project Overview</h4>
+                        <p>A 25 MW WTE plant with 1,500 TPD capacity. Completed in 2019, never achieved sustained commercial operation.</p>
+                        
+                        <h4>What Went Wrong</h4>
+                        <ul>
+                            <li>Waste characterization: 2-week study in dry season only</li>
+                            <li>Designed for 12 MJ/kg; actual was 8.5 MJ/kg</li>
+                            <li>Grate system jammed frequently</li>
+                            <li>APC system undersized for pollutant loads</li>
+                            <li>No local maintenance capability</li>
+                            <li>Assumed 90% availability; achieved 40%</li>
+                        </ul>
+                        
+                        <div class="case-metric">
+                            Cost: <strong>$180M</strong> + <strong>$60M</strong> retrofit estimate
+                        </div>
+                    </div>
+                </div>
+
+                <div class="case-card case-success fade-in">
+                    <div class="case-header">
+                        <h3>Successful Project</h3>
+                        <span class="case-location">The Kano Optimized System</span>
+                    </div>
+                    <div class="case-body">
+                        <h4>Project Overview</h4>
+                        <p>A 10 MW WTE plant with 500 TPD capacity. Took a different approach with extensive preparation.</p>
+                        
+                        <h4>Success Factors</h4>
+                        <ul>
+                            <li>18-month waste characterization program</li>
+                            <li>Pilot-scale testing with local waste</li>
+                            <li>Customized grate for high-moisture waste</li>
+                            <li>Enhanced pre-processing with drying</li>
+                            <li>6-month operator training at operating plants</li>
+                            <li>Conservative financial model</li>
+                        </ul>
+                        
+                        <div class="case-metric">
+                            Performance: <strong>85%</strong> availability, <strong>8.5 MW</strong> generation
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Economic Analysis -->
+    <section class="economic-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Financial Framework</span>
+                <h2 class="section-title">Economic & Feasibility Analysis</h2>
+                <p class="section-subtitle">Understanding the economics of WTE projects based on realistic assumptions.</p>
+            </div>
+            <div class="economic-grid">
+                <div class="economic-card fade-in">
+                    <h3>Capital Expenditure</h3>
+                    <div class="economic-item">
+                        <span>Civil Works</span>
+                        <strong>15-20%</strong>
+                    </div>
+                    <div class="economic-item">
+                        <span>Equipment & Installation</span>
+                        <strong>60-70%</strong>
+                    </div>
+                    <div class="economic-item">
+                        <span>Engineering & PM</span>
+                        <strong>8-12%</strong>
+                    </div>
+                    <div class="economic-item">
+                        <span>500 TPD Plant (Nigeria)</span>
+                        <strong>$80-120M</strong>
+                    </div>
+                </div>
+                <div class="economic-card fade-in">
+                    <h3>Operating Expenditure</h3>
+                    <div class="economic-item">
+                        <span>Labor</span>
+                        <strong>20-25%</strong>
+                    </div>
+                    <div class="economic-item">
+                        <span>Maintenance</span>
+                        <strong>25-30%</strong>
+                    </div>
+                    <div class="economic-item">
+                        <span>Auxiliary Fuel</span>
+                        <strong>15-25%</strong>
+                    </div>
+                    <div class="economic-item">
+                        <span>Annual (500 TPD)</span>
+                        <strong>$8-12M</strong>
+                    </div>
+                </div>
+                <div class="economic-card fade-in">
+                    <h3>Revenue Streams</h3>
+                    <div class="economic-item">
+                        <span>Electricity Sales</span>
+                        <strong>60-70%</strong>
+                    </div>
+                    <div class="economic-item">
+                        <span>Waste Tipping Fees</span>
+                        <strong>20-30%</strong>
+                    </div>
+                    <div class="economic-item">
+                        <span>Recovered Materials</span>
+                        <strong>5-10%</strong>
+                    </div>
+                    <div class="economic-item">
+                        <span>Break-even</span>
+                        <strong>350-450 TPD</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation -->
+    <section class="implementation-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Project Roadmap</span>
+                <h2 class="section-title">Implementation Strategy for Nigeria</h2>
+                <p class="section-subtitle">A practical approach addressing the specific challenges of this market.</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-number">1</div>
+                    <h4>Pre-Development</h4>
+                    <p>12-18 months: Waste characterization, permits, financing, detailed engineering</p>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-number">2</div>
+                    <h4>Construction</h4>
+                    <p>24-36 months: Site prep, equipment procurement, installation, training</p>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-number">3</div>
+                    <h4>Commissioning</h4>
+                    <p>Cold & hot commissioning, performance testing, commercial operation</p>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-number">4</div>
+                    <h4>Operation</h4>
+                    <p>Continuous monitoring, optimization, maintenance excellence</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Takeaways -->
+    <section id="takeaways" class="takeaways-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Actionable Guidance</span>
+                <h2 class="section-title">Key Takeaways</h2>
+                <p class="section-subtitle">Guidance for engineers, project developers, and policymakers involved in WTE projects.</p>
+            </div>
+            <div class="takeaways-grid">
+                <div class="takeaway-card fade-in">
+                    <h3>For Engineers</h3>
+                    <ul>
+                        <li>Never design based on assumptions - waste characterization is non-negotiable</li>
+                        <li>Adapt technology to local conditions</li>
+                        <li>Design for maintainability</li>
+                        <li>Build in adequate margins</li>
+                        <li>Prioritize reliability over efficiency</li>
+                    </ul>
+                </div>
+                <div class="takeaway-card fade-in">
+                    <h3>For Project Developers</h3>
+                    <ul>
+                        <li>Invest time in understanding local waste characteristics</li>
+                        <li>Secure waste supply agreements with legal enforcement</li>
+                        <li>Build realistic financial models</li>
+                        <li>Develop local technical capability</li>
+                        <li>Plan for the full project lifecycle</li>
+                    </ul>
+                </div>
+                <div class="takeaway-card fade-in">
+                    <h3>For Policymakers</h3>
+                    <ul>
+                        <li>Establish clear regulatory frameworks</li>
+                        <li>Streamline permitting processes</li>
+                        <li>Provide policy certainty for investments</li>
+                        <li>Support local technical expertise</li>
+                        <li>Enforce waste management regulations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Waste-to-Energy Engineering Report</div>
+            <p class="footer-tagline">Why Projects Fail & How Engineers Can Fix Them</p>
+            <p>A Technical Analysis for Developing Markets • Focus: Nigeria & Africa</p>
+            <div class="footer-bottom">
+                <p>© 2026 - Engineering Excellence in Sustainable Infrastructure</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Fade in animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
+</body>
+</html>
